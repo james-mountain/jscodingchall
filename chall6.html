@@ -1,0 +1,25 @@
+<html>
+
+<body>
+    <h1>Coding Challenge 7</h1>
+    <script>
+        function makePara(id) {
+            var newPara = document.createElement("p")
+            newPara.id = id
+            document.body.appendChild(newPara)
+        }
+        function setInnerHTMLPara(id) {
+            document.getElementById(id).innerHTML = document.getElementById('inputtxt').value
+        }
+        function removePara(id) {
+            document.body.removeChild(document.getElementById(id))
+        }
+    </script>
+
+    <input type="button" onclick="makePara('newpara')" value="Make Paragraph" /><br/><br/>
+    Try To Get To One From: <input type="text" id="inputtxt" /><br/>
+    <input type="button" onclick="setInnerHTMLPara('newpara')" value="Set Paragraph Text" /><br/><br/>
+    <input type="button" onclick="removePara('newpara')" value="Remove Paragraph" />
+</body>
+
+</html>

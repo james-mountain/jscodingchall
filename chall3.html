@@ -1,0 +1,35 @@
+<html>
+
+<body>
+    <h1>Coding Challenge 3</h1>
+    <script>
+        var hesaid = 'He said "My name is Elliot"'
+        var arrayOfStrings = ["test", "fast", "uhoh"]
+
+        document.write(hesaid + "<br />")
+        document.write(hesaid.toUpperCase() + "<br />")
+
+        document.write("1" + 2)
+        document.write("<br />")
+
+        for (var i = 0; i < arrayOfStrings.length; i++) {
+            document.write(arrayOfStrings[i] + "<br />")
+        }
+
+        arrayOfStrings.push("another")
+        document.write("<br />")
+
+        for (var i = 0; i < arrayOfStrings.length; i++) {
+            document.write(arrayOfStrings[i] + "<br />")
+        }
+
+        arrayOfStrings.splice(arrayOfStrings.length-1, 1)
+        document.write("<br />")
+
+        for (var i = 0; i < arrayOfStrings.length; i++) {
+            document.write(arrayOfStrings[i] + "<br />")
+        }
+    </script>
+</body>
+
+</html>

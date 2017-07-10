@@ -4,11 +4,11 @@
     <h1>Coding Challenge 2</h1>
     <script>
         function squareNumber(num) {
-            return num*num;
+            return num * num;
         }
 
         function addThreeNums(first, second, third) {
-            return first+second+third;
+            return first + second + third;
         }
 
         function makePersonObj(name, age, occupation) {
@@ -34,15 +34,23 @@
         }
 
         document.write("Square of 4 is " + squareNumber(4) + "<br />")
-        document.write("Adding 1, 2, 3 is " + addThreeNums(1,2,3) + "<br />")
+        document.write("Adding 1, 2, 3 is " + addThreeNums(1, 2, 3) + "<br />")
 
         var newPerson = makePersonObj("Fred", 25, "Developer")
         outputPersonObj(newPerson)
         modifyPersonObj(newPerson, "Modified Fred", 25, "Advanced Developer")
         outputPersonObj(newPerson)
-     </script>
+    </script>
 
-     <input type="button" onclick="outputPersonObj(newPerson)" value="Display the Current Person Object"/>
-     <input type="button" onclick="newPerson.age += 1" value="Make the current person's age +1"/>
+    Name: <input type="text" id="personname" /><br/>
+    Age: <input type="text" id="personage" /><br/>
+    Occupation: <input type="text" id="personoccu" /><br/>
+    <input type="button" onClick="newPerson = makePersonObj(document.getElementById('personname').value, document.getElementById('personage').value, document.getElementById('personoccu').value)" value="Make Person" />
+
+    <br /><br />
+
+    <input type="button" onclick="outputPersonObj(newPerson)" value="Display the Current Person Object" />
+    <input type="button" onclick="newPerson.age += 1" value="Make the current person's age +1" />
 </body>
+
 </html>

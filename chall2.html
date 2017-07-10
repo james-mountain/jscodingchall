@@ -1,0 +1,48 @@
+<html>
+
+<body>
+    <h1>Coding Challenge 2</h1>
+    <script>
+        function squareNumber(num) {
+            return num*num;
+        }
+
+        function addThreeNums(first, second, third) {
+            return first+second+third;
+        }
+
+        function makePersonObj(name, age, occupation) {
+            var person = {};
+
+            person.name = name;
+            person.age = age;
+            person.occupation = occupation;
+
+            return person;
+        }
+
+        function outputPersonObj(person) {
+            window.alert("Name: " + person.name + ", Age: " + person.age + ", Occupation: " + person.occupation);
+        }
+
+        function modifyPersonObj(person, name, age, occupation) {
+            person.name = name;
+            person.age = age;
+            person.occupation = occupation;
+
+            return person; // Don't know if I need this - nice to have if not
+        }
+
+        document.write("Square of 4 is " + squareNumber(4) + "<br />")
+        document.write("Adding 1, 2, 3 is " + addThreeNums(1,2,3) + "<br />")
+
+        var newPerson = makePersonObj("Fred", 25, "Developer")
+        outputPersonObj(newPerson)
+        modifyPersonObj(newPerson, "Modified Fred", 25, "Advanced Developer")
+        outputPersonObj(newPerson)
+     </script>
+
+     <input type="button" onclick="outputPersonObj(newPerson)" value="Display the Current Person Object"/>
+     <input type="button" onclick="newPerson.age += 1" value="Make the current person's age +1"/>
+</body>
+</html>

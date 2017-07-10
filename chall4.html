@@ -1,0 +1,26 @@
+<html>
+
+<body>
+    <h1>Coding Challenge 4</h1>
+    <script>
+        var person = {};
+
+        person.name = "Adam";
+        person.age = 22;
+        person.occupation = "Worker";
+
+        function setAgeAndUpdateDisp() {
+            person.age = document.getElementById('newage').value
+            document.getElementById('curage').innerHTML = "Current Age: " + person.age
+            document.getElementById('ofage').innerHTML = "Correct Age: " + (person.age > 20 && person.age < 40)
+        }
+    </script>
+
+    <p id="curage">Current Age: 22</p>
+    <p id="ofage">Correct Age: true</p>
+
+    Age: <input type="text" id="newage" /><br/>
+    <input type="button" onclick="setAgeAndUpdateDisp()" value="Set the persons age" />
+</body>
+
+</html>

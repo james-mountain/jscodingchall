@@ -1,0 +1,32 @@
+<html>
+
+<body>
+    <h1>Coding Challenge 8</h1>
+    <script>
+        var url = "https://raw.githubusercontent.com/ewomackQA/JSONDataRepo/master/example.json"
+
+        var req = new XMLHttpRequest();
+        req.open("GET", url);
+        req.responseType = 'json';
+        req.send();
+
+        req.onload = function() {
+            var reqrep = req.response;
+
+            document.write("<h1>" + reqrep.squadName + "</h1>");
+            document.write("<h2>Home Town: " + reqrep.homeTown + "</h2>");
+            document.write("<h2>Formed: " + reqrep.formed + "</h2>");
+            document.write("<h2>Secret Base: " + reqrep.secretBase + "</h2;>");
+            document.write("<h2>Active: " + reqrep.active + "</h2>");
+
+            document.write("<h1>Members</h1>");
+
+            for (var i = 0; i < reqrep.members.length; i++) {
+                var member = reqrep.members[i]
+                document.write(member.name + "<br />");
+            }
+        }
+    </script>
+</body>
+
+</html>

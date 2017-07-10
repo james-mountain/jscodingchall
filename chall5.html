@@ -1,0 +1,53 @@
+<html>
+
+<body>
+    <h1>Coding Challenge 5</h1>
+    <div style="width: 700px">
+        <script>
+            function fizzBuzz(cap, fizz, buzz) {
+                for (var i = 1; i <= cap; i++) {
+                    if (i % 3 == 0) {
+                        document.write(fizz)
+                    }
+
+                    if (i % 5 == 0) {
+                        document.write(buzz)
+                    }
+
+                    if (i % 3 != 0 && i % 5 != 0) {
+                        document.write(i)
+                    }
+
+                    document.write(" | ")
+                }
+            }
+
+            fizzBuzz(100, "Fizz", "Buzz")
+
+            document.write("<br />")
+
+            fizzBuzz(50, "A", "B")
+
+            document.write("<br /><br /><br />")
+
+            function tryToGetToOne(input) {
+                document.write(input + "<br />")
+                while (input != 1) {
+                    if (input % 3 == 0) {
+                        input = input / 3
+                    } else if (input % 3 == 1) {
+                        input = input - 1
+                    } else if (input % 3 == 2) {
+                        input = input + 1
+                    }
+                    document.write(input + "<br />")
+                }
+            }
+        </script>
+    </div>
+
+    Try To Get To One From: <input type="text" id="inputnum" /><br/>
+    <input type="button" onclick="tryToGetToOne(document.getElementById('inputnum').value)" value="Go" />
+</body>
+
+</html>

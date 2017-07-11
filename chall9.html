@@ -1,0 +1,202 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Coding Challenge 10/11 - Garage Project</h1>
+    <div style='width: 30%; float:left'>
+        <h2>Existing Cars</h2>
+        <div id='exist'>
+            None
+        </div>
+
+        <h3>Car Controls</h3>
+        <p>Here you can create new cars to add to the garage.</p>
+
+        <h4>Create New Car</h4>
+        Car Model: <input type="text" id="model" /><br/>
+        Car Registration: <input type="text" id="reg" /><br/>
+        Car Wheels: <input type="text" id="wheels" /><br/>
+        Car Fault Number: <input type="text" id="faults" /><br/>
+        <input type="button" onclick="createCarFromForm()" value="Create Car" />
+    </div>
+    <div style='width: 30%; float:left'>
+        <h2 id='gcontents'>Garage Contents [0/5]</h2>
+        <div id='garage'>
+            None
+        </div>
+
+        <h3>Garage Controls</h3>
+        <p>Here you can manipulate the garage.</p>
+
+        <h4>Add Car By Registration</h4>
+        Car Registration: <input type="text" id="regadd" /><br/>
+        <input type="button" onclick="addCarToGarForm()" value="Add Car" />
+
+        <h4>Remove Car By Registration</h4>
+        Car Registration: <input type="text" id="regremove" /><br/>
+        <input type="button" onclick="removeCarFromFrom()" value="Remove Car" />
+
+        <h4>Get Bill for Car</h4>
+        Car Registration: <input type="text" id="regbill" /><br/>
+        <input type="button" onclick="outputCarBill()" value="Display Bill" />
+    </div>
+    <div style='width: 60%'>
+        <h2>Command Line</h2>
+        <div id='cmd'>
+
+        </div>
+        <input type="text" id="cmdinput" /><input type="button" onclick="runCmdInput()" value="Enter" />
+    </div>
+
+    <script>
+        var existingCars = new Map();
+        var garageCars = new Map();
+        var garageLimit = 5
+
+        function createNewCar(model, registration, wheels, faults) {
+            var car = {}
+            car.model = model
+            car.registration = registration
+            car.wheels = wheels
+            car.faults = faults
+            return car
+        }
+
+        function addCarToGarage(car) {
+            if (!existingCars.get(car.registration) || garageCars.size >= garageLimit) {
+                return false
+            }
+
+            garageCars.set(car.registration, car)
+            updateGarageContents()
+
+            return true
+        }
+
+        function addCarToKnowledge(car) {
+            existingCars.set(car.registration, car)
+            updateExistingCars()
+        }
+
+        function removeCarFromGarage(car) {
+            if (garageCars.delete(car.registration)) {
+                updateGarageContents()
+                return true
+            }
+
+            return false
+        }
+
+        function updateExistingCars() {
+            var contentsStr = "";
+            for (var car of existingCars.values()) {
+                contentsStr += "<div class='car'>" + car.registration + " " + car.model + " " + car.wheels + " " + car.faults + "</div>";
+            }
+
+            document.getElementById('exist').innerHTML = contentsStr;
+        }
+
+        function updateGarageContents() {
+            var contentsStr = "";
+            for (var car of garageCars.values()) {
+                contentsStr += "<div class='car'>" + car.registration + " " + car.model + " " + car.wheels + " " + car.faults + "</div>";
+            }
+
+            document.getElementById('garage').innerHTML = contentsStr;
+            document.getElementById('gcontents').innerHTML = "Garage Contents [" + garageCars.size + "/" + garageLimit +"]"
+        }
+
+        function faultsToBill(faults) {
+            alert("Cost of fixing car faults: £" + (15.00 * faults))
+        }
+
+        function outputCarBill() {
+            var car = garageCars.get(document.getElementById('regbill').value)
+            faultsToBill(car.faults)
+        }
+
+        function addCmdPrint(txt) {
+            document.getElementById('cmd').innerHTML += txt + "<br />";
+        }
+
+        function parseCmd(args) {
+            switch (args[0]) {
+                case "create":
+                    if (args.length == 6 && args[1] == "car") {
+                        addCarToKnowledge(createNewCar(args[2], args[3], args[4], args[5]))
+                        addCmdPrint("Added car with registration: " + args[3] + ".")
+                    }
+                    break;
+                case "output":
+                    var ivals = (args.length == 2 && args[1] == "exist") && existingCars.values() || garageCars.values()
+                    for (var car of ivals) {
+                        addCmdPrint(car.registration + " " + car.model + " " + car.wheels + " " + car.faults)
+                    }
+                    break;
+                case "check":
+                    var excar = existingCars.get(args[2])
+                    var ivals = args[1] == "in" && addCarToGarage(excar) || args[1] == "out" && removeCarFromGarage(excar)
+                    if (ivals) {
+                        addCmdPrint("Garage operation completed successfully.")
+                    } else {
+                        addCmdPrint("Car does not exist, or tried to do an invalid check cmd.")
+                    }
+                    break;
+                case "bill":
+                    var excar = existingCars.get(args[1])
+                    var tetval = excar && faultsToBill(excar.faults)
+
+                    if (!excar) {
+                        addCmdPrint("Car does not exist.")
+                    } else {
+                        addCmdPrint("Displayed bill.")
+                    }
+                    break;
+                case "garage":
+                    if (args[1] == "changelimit" && args.length == 3 && parseInt(args[2], 10)) {
+                        garageLimit = parseInt(args[2], 10)
+                        updateGarageContents()
+                        addCmdPrint("Resized garage.")
+                    } else if (args[1] == "empty") {
+                        garageCars.clear();
+                        updateGarageContents()
+                        addCmdPrint("Emptied garage.")
+                    } else {
+                        addCmdPrint("Invalid garage command.")
+                    }
+                    break;
+                default:
+                    addCmdPrint("Unknown cmd: " + args[0])
+                    break;
+            }
+        }
+
+        function runCmdInput() {
+            var ival = document.getElementById('cmdinput').value
+            var spliced = ival.split(" ")
+
+            addCmdPrint("> "+ival)
+            parseCmd(spliced)
+
+            document.getElementById('cmdinput').value = "";
+        }
+
+        function createCarFromForm() {
+            var newCar = createNewCar(document.getElementById('model').value, document.getElementById('reg').value, document.getElementById('wheels').value, document.getElementById('faults').value)
+            addCarToKnowledge(newCar)
+        }
+
+        function removeCarFromFrom() {
+            removeCarFromGarage(garageCars.get(document.getElementById('regremove').value))
+        }
+
+        function addCarToGarForm() {
+            addCarToGarage(existingCars.get(document.getElementById('regadd').value))
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+#cmd {
+    background-color: #111111;
+    width: 80%;
+    color: #cccccc;
+    font-family: "Courier New";
+    height: 300px;
+}
+
+#cmdinput {
+    width: 80%;
+}
